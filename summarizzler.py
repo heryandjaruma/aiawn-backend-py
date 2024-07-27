@@ -30,7 +30,7 @@ class SummarizzlerService:
             to_summarize.append(
                 {
                     "role": "system",
-                    "content": "You are a summarizer assistant. Summarize a LLM convo within 2-8 word as a title. Output with just the final title without apostrophe."
+                    "content": "You are a summarizer assistant. Summarize a LLM convo within 2-8 word as a title with concise meaning. Output with just the final title without apostrophe."
                 })
 
             for m in messages:

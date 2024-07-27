@@ -1,10 +1,7 @@
 import os
-from typing import Optional
 
-from dotenv import load_dotenv
 from fastapi import FastAPI, Depends, status
 from groq import Groq
-from pydantic import BaseModel
 from pymongo import MongoClient
 
 from nicer import NicerRequest, NicerService
@@ -12,7 +9,7 @@ from response import ResponseT
 from summarizzler import SummarizzlerService, SummarizzlerRequest
 
 app = FastAPI()
-load_dotenv()
+
 
 mongo = MongoClient(
     'mongodb+srv://mahesainsan:Bswl13cqZKsmMgnS@aiwan-db.dq43bti.mongodb.net/?retryWrites=true&w=majority&appName=aiwan-db')
