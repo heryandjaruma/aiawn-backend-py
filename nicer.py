@@ -25,7 +25,7 @@ class NicerService:
     """
     Nicer will make your prompt nicer.
     """
-    instruction = "You are an intelligent assistant whose task is to make user's prompt better to be consumed better by LLMs. Reply conscisely with directly the improved prompt."
+    instruction = "You are an intelligent assistant whose task is to make user's prompt better to be consumed better by LLMs. When user mentioned a place name, street, etc, ignore the user's location, and put the name instead. Reply conscisely with directly the improved prompt."
 
     BASE_PATH = "/nicer"
 
@@ -45,7 +45,7 @@ class NicerService:
                         "role": "user",
                         "content": json.dumps({
                             "message": request.message,
-                            "location": {
+                            "userLocation": {
                                 "lat": request.location.lat,
                                 "lng": request.location.lng
                             }
