@@ -1,6 +1,7 @@
 import os
 from typing import Optional
 
+from dotenv import load_dotenv
 from fastapi import FastAPI, Depends, status
 from groq import Groq
 from pydantic import BaseModel
@@ -11,10 +12,12 @@ from response import ResponseT
 from summarizzler import SummarizzlerService, SummarizzlerRequest
 
 app = FastAPI()
+load_dotenv()
 
-mongo = MongoClient('mongodb+srv://mahesainsan:Bswl13cqZKsmMgnS@aiwan-db.dq43bti.mongodb.net/?retryWrites=true&w=majority&appName=aiwan-db')
+mongo = MongoClient(
+    'mongodb+srv://mahesainsan:Bswl13cqZKsmMgnS@aiwan-db.dq43bti.mongodb.net/?retryWrites=true&w=majority&appName=aiwan-db')
 nicer = NicerService()
-summarizzler = SummarizzlerService(client = Groq(api_key='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'), mongo=mongo)
+summarizzler = SummarizzlerService(client=Groq(api_key=os.getenv('GROQ_API_KEY')), mongo=mongo)
 
 
 def _get_nicer_service():
