@@ -1,14 +1,9 @@
-import json
-
-from fastapi import HTTPException
-from pymongo import MongoClient
-from typing import Optional
 from bson import ObjectId
-
+from fastapi import HTTPException
 from groq import Groq
 from pydantic import BaseModel
-from pymongo.collection import Collection, ReturnDocument
-from pymongo.database import Database
+from pymongo import MongoClient
+from pymongo.collection import ReturnDocument
 
 from response import ResponseT, Code, Status
 
@@ -29,9 +24,6 @@ class SummarizzlerService:
 
     def summarize(self, chat_room_id: str) -> ResponseT:
         try:
-            # Print the chat_room_id for debugging
-            # Find the chat
-
             messages = self.mongo.get_database('test').get_collection('chatmessages').find({"chatRoomId": ObjectId(chat_room_id)})
 
             to_summarize = []
@@ -49,11 +41,10 @@ class SummarizzlerService:
             chat_completion = self.client.chat.completions.create(
                 messages=to_summarize,
                 # The language model which will generate the completion.
-                model="llama3-8b-8192"
+                model="llama-3.1-8b-instant"
             )
 
             summary = chat_completion.choices[0].message.content
-
 
             document = self.mongo.get_database('test').get_collection('chatrooms').find_one_and_update(
                 filter={"_id":ObjectId(chat_room_id)},
@@ -61,12 +52,7 @@ class SummarizzlerService:
                 return_document=ReturnDocument.AFTER
             )
 
-
             if document:
-                # Convert ObjectId to string before returning
-
-
-
                 return ResponseT(
                     code=Code.ok,
                     status=Status.ok,
