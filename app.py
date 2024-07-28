@@ -7,8 +7,10 @@ from pymongo import MongoClient
 from nicer import NicerRequest, NicerService
 from response import ResponseT
 from summarizzler import SummarizzlerService, SummarizzlerRequest
+from dotenv import load_dotenv
 
 app = FastAPI()
+load_dotenv()
 
 
 mongo = MongoClient(
